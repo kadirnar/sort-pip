@@ -3,7 +3,7 @@
   Sort-Pip: Packaged version of the Sort repository  
 </h2>
 <h4>
-    <img width="700" alt="teaser" src="https://github.com/kadirnar/sort-pip/blob/main/doc/sort_video.gif">
+    <img width="700" alt="teaser" src="doc/paper.png">
 </h4>
 </div>
 
