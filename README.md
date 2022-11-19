@@ -3,7 +3,7 @@
   Sort-Pip: Packaged version of the Sort repository  
 </h2>
 <h4>
-    <img width="700" alt="teaser" src="doc/paper.png">
+    <img width="350" alt="teaser" src="doc/paper.png">
 </h4>
 </div>
 
