@@ -24,8 +24,6 @@ for image in images:
    dets = detector(image)
    online_targets = tracker.update(dets)
 ```
-### Reference:
- - [Sort](https://github.com/abewley/sort)
 
 ### Citation
 ```bibtex
