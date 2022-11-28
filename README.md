@@ -17,9 +17,9 @@ pip install sort-track
 
 ### Detection Model + Sort 
 ```python
-from sort.tracker import Sort
+from sort.tracker import SortTracker
 
-tracker = Sort(args)
+tracker = SortTracker(args)
 for image in images:
    dets = detector(image)
    online_targets = tracker.update(dets)

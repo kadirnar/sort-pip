@@ -81,7 +81,7 @@ class KalmanBoxTracker(object):
 
     count = 0
 
-    def __init__(self, bbox):
+    def __init__(self, bbox, conf, cls):
         """
         Initialises a tracker using initial bounding box.
         """
@@ -116,6 +116,8 @@ class KalmanBoxTracker(object):
         self.hits = 0
         self.hit_streak = 0
         self.age = 0
+        self.conf = conf
+        self.cls = cls
 
     def update(self, bbox):
         """
@@ -193,7 +195,7 @@ def associate_detections_to_trackers(detections, trackers, iou_threshold=0.3):
     return matches, np.array(unmatched_detections), np.array(unmatched_trackers)
 
 
-class Sort(object):
+class SortTracker(object):
     def __init__(self, max_age=1, min_hits=3, iou_threshold=0.3):
         """
         Sets key parameters for SORT
@@ -204,7 +206,7 @@ class Sort(object):
         self.trackers = []
         self.frame_count = 0
 
-    def update(self, dets=np.empty((0, 5))):
+    def update(self, dets, _):
         """
         Params:
           dets - a numpy array of detections in the format [[x1,y1,x2,y2,score],[x1,y1,x2,y2,score],...]
@@ -234,17 +236,19 @@ class Sort(object):
 
         # create and initialise new trackers for unmatched detections
         for i in unmatched_dets:
-            trk = KalmanBoxTracker(dets[i, :])
+            trk = KalmanBoxTracker(dets[i, :][:4], dets[i, :][4], int(dets[i, :][5]))
             self.trackers.append(trk)
         i = len(self.trackers)
         for trk in reversed(self.trackers):
             d = trk.get_state()[0]
+            x1, y1, x2, y2 = d[0], d[1], d[2], d[3]
             if (trk.time_since_update < 1) and (trk.hit_streak >= self.min_hits or self.frame_count <= self.min_hits):
-                ret.append(np.concatenate((d, [trk.id + 1])).reshape(1, -1))  # +1 as MOT benchmark requires positive
+                # breakpoint()
+                ret.append(np.concatenate((d, [trk.id + 1], [trk.cls], [trk.conf])).reshape(1, -1))
             i -= 1
             # remove dead tracklet
             if trk.time_since_update > self.max_age:
                 self.trackers.pop(i)
         if len(ret) > 0:
             return np.concatenate(ret)
-        return np.empty((0, 5))
+        return np.empty((0, 7))
