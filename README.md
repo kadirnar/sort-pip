@@ -5,6 +5,10 @@
 <h4>
     <img width="500" alt="teaser" src="https://github.com/kadirnar/sort-pip/blob/05b7b968926a40324c7162041d875d6b53a02651/doc/sort_video.gif">
 </h4>
+<div>
+    <a href="https://pepy.tech/project/sort-track"><img src="https://pepy.tech/badge/sort-track" alt="downloads"></a>
+    <a href="https://badge.fury.io/py/sort-track"><img src="https://badge.fury.io/py/sort-track.svg" alt="pypi version"></a>
+</div>
 </div>
 
 ## <div align="center">Overview</div>
